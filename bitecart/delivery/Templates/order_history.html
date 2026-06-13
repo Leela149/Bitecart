@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiteCart - Order History</title>
+    {% load static %}
+    <link href="{% static 'css/global.css' %}" rel="stylesheet">
+    <link href="{% static 'css/checkout.css' %}" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- 🧭 Navigation Bar -->
+    <header class="navbar">
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <a href="{% url 'customer_home' username %}" class="brand">
+                <span>🍕</span> BiteCart
+            </a>
+            <a href="{% url 'customer_home' username %}" class="back-link"
+                style="text-decoration: none; color: var(--text-muted); font-weight: 500;">
+                ← Back to Restaurants
+            </a>
+        </div>
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <div class="welcome-msg">
+                Welcome, <span>{{ username }}</span>!
+            </div>
+            <a href="{% url 'open_support' username %}" class="btn btn-secondary"
+                style="padding: 10px 20px; border-radius: 30px;">
+                💬 Support
+            </a>
+        </div>
+    </header>
+
+    <!-- 📋 Main Container -->
+    <main class="dashboard-container" style="max-width: 900px; margin: 40px auto 80px; padding: 0 20px;">
+
+        <div class="dashboard-title-row" style="margin-bottom: 15px;">
+            <h1
+                style="color: #fff; text-shadow: 1px 1px 8px rgba(0,0,0,0.6); font-size: 2.2rem; font-weight: 700; margin: 0;">
+                Your Order History</h1>
+        </div>
+        <p class="section-subtitle"
+            style="color: rgba(255,255,255,0.85); text-shadow: 1px 1px 6px rgba(0,0,0,0.6); margin-bottom: 40px;">View
+            details of your past culinary journeys and quickly order them again with a single click.</p>
+
+        <div class="order-history-list" style="display: flex; flex-direction: column; gap: 30px;">
+            {% for order in orders %}
+            <article class="order-card glass-card"
+                style="padding: 25px; border-radius: var(--radius-md); display: flex; flex-direction: column; gap: 20px;">
+
+                <!-- Card Header -->
+                <div class="order-card-header"
+                    style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px;">
+                    <div>
+                        <span
+                            style="font-size: 0.85rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 2px;">Order
+                            Placed</span>
+                        <strong style="color: var(--dark-color); font-size: 1rem;">{{ order.created_at|date:"F j, Y, g:i
+                            a" }}</strong>
+                    </div>
+                    <div>
+                        <span
+                            style="font-size: 0.85rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 2px;">Total
+                            Paid</span>
+                        <strong style="color: var(--primary-color); font-size: 1.15rem; font-weight: 700;">₹{{
+                            order.total_price }}</strong>
+                    </div>
+                    <div>
+                        <span
+                            style="font-size: 0.85rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 4px;">Status</span>
+                        <span class="status-badge {{ order.status|lower }}">{{ order.status }}</span>
+                    </div>
+                </div>
+
+                <!-- Card Body (Items) -->
+                <div class="order-card-body" style="display: flex; flex-direction: column; gap: 12px;">
+                    {% for order_item in order.order_items.all %}
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem;">
+                        <span style="color: var(--dark-color); font-weight: 500;">
+                            {{ order_item.item.name }}
+                            <strong style="color: var(--text-muted); font-size: 0.85rem; margin-left: 8px;">x{{
+                                order_item.quantity }}</strong>
+                            <span
+                                style="font-size: 0.85rem; color: var(--text-muted); font-weight: 400; margin-left: 5px;">at
+                                {{ order_item.item.restaurant.name }}</span>
+                        </span>
+                        <span style="color: var(--dark-color); font-weight: 600;">₹{{ order_item.price }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Card Footer (Actions) -->
+                <div class="order-card-actions"
+                    style="display: flex; justify-content: flex-end; border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: 5px;">
+                    <a href="{% url 'reorder' order.id %}" class="btn btn-primary"
+                        style="padding: 10px 22px; border-radius: 30px; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; text-decoration: none;">
+                        🔁 One-Click Reorder
+                    </a>
+                </div>
+
+            </article>
+            {% empty %}
+            <div class="empty-box glass-card"
+                style="padding: 50px 30px; text-align: center; border-radius: var(--radius-md);">
+                <div style="font-size: 4rem; margin-bottom: 20px;">📜</div>
+                <h3 style="color: var(--dark-color); margin-bottom: 10px; font-size: 1.4rem;">No orders found!</h3>
+                <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 0.95rem;">You haven't placed any
+                    orders with BiteCart yet.</p>
+                <a href="{% url 'customer_home' username %}" class="btn btn-primary"
+                    style="padding: 12px 30px; border-radius: 30px; font-weight: 600; text-decoration: none;">
+                    Explore Delicious Menus
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+
+    </main>
+
+</body>
+
+</html>

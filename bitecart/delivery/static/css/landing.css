@@ -1,0 +1,185 @@
+/* ==========================================================================
+   BiteCart Landing & Authentication Style
+   ========================================================================== */
+
+/* 🚪 Landing/Hero Center Box */
+.landing-container {
+  min-height: 85vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.landing-card {
+  max-width: 500px;
+  width: 100%;
+  padding: 50px 40px;
+  text-align: center;
+}
+
+.landing-title {
+  font-size: 3.2rem;
+  font-weight: 700;
+  margin: 0 0 15px 0;
+  color: var(--dark-color);
+}
+
+.landing-title span {
+  display: inline-block;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.landing-subtitle {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  margin-bottom: 40px;
+}
+
+.landing-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.landing-buttons .btn {
+  width: 100%;
+  padding: 15px;
+}
+
+/* 🧾 Authentication / Form Card Layout */
+.auth-container {
+  min-height: 85vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.auth-card {
+  max-width: 450px;
+  width: 100%;
+  padding: 40px 35px;
+  text-align: center;
+}
+
+.auth-card h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--dark-color);
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+
+.auth-card .btn {
+  width: 100%;
+  margin-top: 15px;
+  padding: 14px;
+}
+
+.auth-footer {
+  margin-top: 25px;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.auth-footer a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.auth-footer a:hover {
+  text-decoration: underline;
+  color: var(--accent-color);
+}
+
+/* Fail Page Box */
+.fail-card {
+  border-left: 5px solid var(--danger-color);
+  max-width: 500px;
+  width: 100%;
+  padding: 40px;
+  text-align: center;
+}
+
+.fail-card h1 {
+  font-size: 1.5rem;
+  color: var(--danger-color);
+  margin: 0;
+}
+
+/* 💡 FAQ Accordion Styles */
+.faq-accordion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: left;
+}
+
+.faq-accordion-item {
+  border-bottom: 1.5px solid var(--border-color);
+  padding-bottom: 15px;
+}
+
+.faq-accordion-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.faq-summary {
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  color: var(--dark-color);
+  transition: var(--transition);
+  position: relative;
+  list-style: none; /* removes standard arrow */
+  padding-right: 25px;
+}
+
+.faq-summary::-webkit-details-marker {
+  display: none; /* removes standard arrow in Chrome/Safari */
+}
+
+.faq-summary::after {
+  content: '▼';
+  font-size: 0.8rem;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: var(--transition);
+  color: var(--text-muted);
+}
+
+.faq-accordion-item[open] .faq-summary::after {
+  transform: translateY(-50%) rotate(-180deg);
+  color: var(--primary-color);
+}
+
+.faq-summary:hover {
+  color: var(--primary-color);
+}
+
+.faq-content {
+  margin: 10px 0 0 0;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+

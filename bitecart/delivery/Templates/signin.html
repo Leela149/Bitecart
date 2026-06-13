@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiteCart - Sign In</title>
+     {% load static %}
+    <link href="{% static 'css/global.css' %}" rel="stylesheet">
+    <link href="{% static 'css/landing.css' %}" rel="stylesheet">
+</head>
+<body>
+
+    <main class="auth-container">
+        <div class="auth-card glass-card">
+            <h2>🍔 Welcome Back</h2>
+            <form action="{% url 'signin' %}" method="POST">
+                {% csrf_token %} 
+                
+                <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <input type="text" id="username" name="username" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-input" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Sign In</button>
+            </form>
+            <div class="auth-footer">
+                Don't have an account? <a href="{% url 'open_signup' %}">Sign Up</a>
+            </div>
+        </div>
+    </main>
+    
+</body>
+</html>

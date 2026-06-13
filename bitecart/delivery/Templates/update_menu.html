@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiteCart Admin - Manage Menu</title>
+    {% load static %}
+    <link href="{% static 'css/global.css' %}" rel="stylesheet">
+    <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+    <link href="{% static 'css/landing.css' %}" rel="stylesheet">
+</head>
+<body>
+
+    <!-- 🧭 Navigation Bar -->
+    <header class="navbar">
+        <a href="/" class="brand">
+            <span>🍕</span> BiteCart Admin
+        </a>
+        <a href="javascript:history.back()" class="back-link" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">
+            ← Back to Catalog
+        </a>
+    </header>
+
+    <main class="dashboard-container" style="max-width: 1400px;">
+        
+        <div class="dashboard-title-row">
+            <h1>Manage Menu - {{ restaurant.name }}</h1>
+        </div>
+        <p class="section-subtitle">Add items and view the current active menu items below.</p>
+
+        <!-- 👥 Dual Column Grid -->
+        <div class="dual-layout" style="grid-template-columns: 2.3fr 1fr;">
+            
+            <!-- Left Side: Table of Current Menu Items -->
+            <section class="table-container glass-card" style="padding: 20px;">
+                <h3 style="margin-top: 0; margin-bottom: 20px; font-weight: 600; color: var(--dark-color);">🍔 Current Menu Collection</h3>
+                <table class="modern-table">
+                    <thead>
+                        <tr>
+                            <th>Item Name</th>
+                            <th>Preview</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Type</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in itemList %}
+                        <tr>
+                            <td style="font-weight: 600; color: var(--dark-color);">{{ item.name }}</td>
+                            <td>
+                                {% if item.picture %}
+                                <img src="{{ item.picture }}" alt="{{ item.name }}" style="width: 65px; height: 45px; object-fit: cover; border-radius: 4px;">
+                                {% else %}
+                                <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=200" alt="{{ item.name }}" style="width: 65px; height: 45px; object-fit: cover; border-radius: 4px;">
+                                {% endif %}
+                            </td>
+                            <td style="font-size: 0.85rem; max-width: 150px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;" title="{{ item.description }}">
+                                {{ item.description }}
+                            </td>
+                            <td style="font-weight: 600; color: var(--primary-color);">₹{{ item.price }}</td>
+                            <td>
+                                {% if item.vegeterian %}
+                                <span style="color: var(--success-color); font-weight: 600;">Veg</span>
+                                {% else %}
+                                <span style="color: var(--danger-color); font-weight: 600;">Non-Veg</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div style="display: flex; gap: 8px; align-items: center;">
+                                    <a href="{% url 'open_edit_item' item.id %}" class="btn btn-primary" style="padding: 6px 12px; font-size: 0.85rem; min-width: auto; font-weight: 500;">✏️ Edit</a>
+                                    <a href="{% url 'delete_item' item.id %}" class="btn btn-danger" style="padding: 6px 12px; font-size: 0.85rem; min-width: auto; font-weight: 500;" onclick="return confirm('Are you sure you want to delete this menu item?');">🗑️ Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                                No items in this menu yet.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Right Side: Form to Add New Food Items -->
+            <section class="auth-card glass-card" style="max-width: 100%; text-align: left; padding: 30px;">
+                <h3 style="margin-top: 0; margin-bottom: 20px; font-weight: 600; color: var(--dark-color);">🍕 Refresh Menu Flavors</h3>
+                <form action="{% url 'update_menu' restaurant.id %}" method="post">
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="name">Item Name</label>
+                        <input type="text" id="name" name="name" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="description">Description</label>
+                        <textarea id="description" name="description" class="form-input" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="price">Price (₹)</label>
+                        <input type="number" id="price" name="price" step="0.01" class="form-input" required>
+                    </div>
+
+                    <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                        <input type="checkbox" id="vegetarian" name="vegetarian" style="transform: scale(1.3); cursor: pointer;">
+                        <label for="vegetarian" style="font-weight: 600; cursor: pointer; color: var(--text-dark); margin: 0;">Vegetarian Item</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="picture">Image URL</label>
+                        <input type="url" id="picture" name="picture" class="form-input" placeholder="https://example.com/food.jpg">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Add Item</button>
+                </form>
+            </section>
+
+        </div>
+    </main>
+
+</body>
+</html>

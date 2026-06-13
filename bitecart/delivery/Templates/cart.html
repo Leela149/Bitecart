@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiteCart - Shopping Cart</title>
+    {% load static %}
+    <link href="{% static 'css/global.css' %}" rel="stylesheet">
+    <link href="{% static 'css/checkout.css' %}" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- 🧭 Navigation Bar -->
+    <header class="navbar">
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <a href="/" class="brand">
+                <span>🍕</span> BiteCart
+            </a>
+            <a href="javascript:history.back()" class="back-link"
+                style="text-decoration: none; color: var(--text-muted); font-weight: 500;">
+                ← Back to Menu
+            </a>
+        </div>
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <div class="welcome-msg">
+                Welcome, <span>{{ username }}</span>!
+            </div>
+            <a href="{% url 'order_history' username %}" class="btn btn-secondary"
+                style="padding: 10px 20px; border-radius: 30px;">
+                📜 Orders
+            </a>
+            <a href="{% url 'open_support' username %}" class="btn btn-secondary"
+                style="padding: 10px 20px; border-radius: 30px;">
+                💬 Support
+            </a>
+        </div>
+    </header>
+
+    <!-- 🛒 Cart Wrapper -->
+    <main class="cart-split-container">
+        <!-- Left Section: Cart Items -->
+        <section class="cart-items-card glass-card">
+            <h1 class="cart-header-title">Your Shopping Cart</h1>
+            <div class="cart-items-wrapper">
+                {% for cart_item in cart_items %}
+                <article class="cart-item-row">
+                    {% if cart_item.item.picture %}
+                    <img src="{{ cart_item.item.picture }}" alt="{{ cart_item.item.name }}" class="cart-item-img">
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=300"
+                        class="cart-item-img" alt="{{ cart_item.item.name }}">
+                    {% endif %}
+                    <div class="cart-item-info">
+                        <h3 class="cart-item-name">{{ cart_item.item.name }}</h3>
+                        <p class="cart-item-desc">{{ cart_item.item.description }}</p>
+                    </div>
+
+                    <!-- 🔢 Quantity Adjuster Controls -->
+                    <div class="quantity-controller">
+                        <a href="{% url 'decrease_quantity' cart_item.id %}" class="qty-btn decrease">-</a>
+                        <span class="qty-number">{{ cart_item.quantity }}</span>
+                        <a href="{% url 'increase_quantity' cart_item.id %}" class="qty-btn increase">+</a>
+                    </div>
+
+                    <div class="cart-item-price">
+                        ₹{{ cart_item.item.price }}
+                    </div>
+
+                    <!-- 🗑️ Delete Action -->
+                    <a href="{% url 'delete_cart_item' cart_item.id %}" class="delete-action-btn" title="Remove item"
+                        onclick="return confirm('Remove {{ cart_item.item.name }} from cart?');">
+                        🗑️
+                    </a>
+                </article>
+                {% empty %}
+                <div class="empty-box">
+                    <div class="empty-icon">🛒</div>
+                    <h3 style="color: var(--text-dark);">Your cart is empty!</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 25px;">Add some delicious meals from the menu to
+                        satisfy your cravings.</p>
+                    <a href="javascript:history.back()" class="btn btn-primary">Browse Food</a>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Right Section: Summary Box -->
+        {% if cart_items %}
+        <section class="summary-checkout-card glass-card">
+            <h2 class="summary-heading">Order Summary</h2>
+            <div class="summary-detail-row">
+                <span>Subtotal</span>
+                <span>₹{{ total_price }}</span>
+            </div>
+            <div class="summary-detail-row" style="color: var(--success-color); font-weight: 600;">
+                <span>Delivery Charge</span>
+                <span>FREE</span>
+            </div>
+            <div class="summary-detail-row total-bold">
+                <span>Total</span>
+                <span>₹{{ total_price }}</span>
+            </div>
+
+            <form action="{% url 'checkout' username %}" style="margin: 0; padding: 0;">
+                <button type="submit" class="btn btn-primary">CHECK OUT</button>
+            </form>
+        </section>
+        {% endif %}
+    </main>
+
+</body>
+
+</html>

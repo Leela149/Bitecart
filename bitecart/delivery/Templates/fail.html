@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiteCart - Authentication Failed</title>
+    {% load static %}
+    <link href="{% static 'css/global.css' %}" rel="stylesheet">
+    <link href="{% static 'css/landing.css' %}" rel="stylesheet">
+</head>
+<body>
+
+    <main class="auth-container">
+        <div class="fail-card glass-card">
+            <h1>🥗 That combo doesn’t taste right.</h1>
+            <p style="color: var(--text-muted); margin: 15px 0 30px 0;">Please check your username and password, then try signing in again.</p>
+            <a href="{% url 'open_signin' %}" class="btn btn-primary" style="width: auto;">Try Again</a>
+        </div>
+    </main>
+
+</body>
+</html>

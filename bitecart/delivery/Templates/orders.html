@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiteCart - Order Confirmed</title>
+    {% load static %}
+    <link href="{% static 'css/global.css' %}" rel="stylesheet">
+    <link href="{% static 'css/checkout.css' %}" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- 🏆 Success Container -->
+    <main class="receipt-container">
+        <div class="receipt-card glass-card">
+
+            <!-- Pulsing Success Checkmark -->
+            <div class="checkmark-circle">
+                <span class="checkmark-icon">✓</span>
+            </div>
+
+            <h1>Order Placed Successfully!</h1>
+            <p class="receipt-text">Thank you for your order, {{ username }}. Your delicious meal will be prepared and
+                delivered shortly.</p>
+
+            <!-- 📍 Delivery Address Card -->
+            <section class="receipt-info-block">
+                <h2 class="receipt-label">Delivery Address</h2>
+                <p class="receipt-value">{{ customer.address }}</p>
+            </section>
+
+            <!-- 📋 Receipt Details (only displays if cart_items list was evaluated successfully) -->
+            {% if cart_items %}
+            <section class="receipt-items-block">
+                <h2 class="receipt-label" style="margin-bottom: 12px;">Receipt Summary</h2>
+                {% for cart_item in cart_items %}
+                <div class="receipt-item-row">
+                    <span>{{ cart_item.item.name }} <strong
+                            style="color: var(--text-muted); font-size: 0.85rem; margin-left: 8px;">x{{
+                            cart_item.quantity }}</strong></span>
+                    <span>₹{{ cart_item.item.price }}</span>
+                </div>
+                {% endfor %}
+                <div class="receipt-total-row">
+                    <span>Total Paid</span>
+                    <span>₹{{ total_price }}</span>
+                </div>
+            </section>
+            {% endif %}
+
+            <!-- 🔗 Actions Group -->
+            <div class="receipt-buttons">
+                {% if cart_items %}
+                <a href="{% url 'view_menu' cart_items.0.restaurant.id username %}" class="btn btn-primary">
+                    Order More from Restaurant
+                </a>
+                {% endif %}
+                <a href="/" class="btn btn-secondary">
+                    Back to Home
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+
+</html>

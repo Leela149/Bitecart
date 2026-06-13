@@ -1,0 +1,346 @@
+/* ==========================================================================
+   BiteCart Dashboard & Directory Grid Style
+   ========================================================================== */
+
+/* 🍽️ Page Content Containers */
+.dashboard-container {
+  max-width: 1200px;
+  margin: 40px auto 80px;
+  padding: 0 20px;
+}
+
+.dashboard-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+  padding-bottom: 15px;
+}
+
+.dashboard-title-row h1,
+.dashboard-title-row h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.6);
+}
+
+.section-subtitle {
+  color: #eeeeee;
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.6);
+}
+
+/* 🏢 Admin Dashboard Card Navigation */
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.admin-card {
+  padding: 40px 30px;
+  text-align: center;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.admin-card h3 {
+  font-size: 1.4rem;
+  margin: 0 0 20px 0;
+  color: var(--dark-color);
+}
+
+.admin-card .btn {
+  width: 100%;
+}
+
+/* 🍕 Restaurant & Item Grids */
+.grid-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 30px;
+}
+
+/* Catalog Card */
+.catalog-card {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.card-img-wrapper {
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition);
+}
+
+.catalog-card:hover .card-img {
+  transform: scale(1.08);
+}
+
+/* Badges */
+.card-badge-right {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #ffb300;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(4px);
+}
+
+.card-badge-left {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(4px);
+}
+
+.card-badge-left.veg {
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--success-color);
+}
+
+.card-badge-left.nonveg {
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--danger-color);
+}
+
+.card-badge-left .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.veg .dot { background-color: var(--success-color); }
+.nonveg .dot { background-color: var(--danger-color); }
+
+/* Details */
+.card-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.card-title-h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--dark-color);
+  margin: 0;
+}
+
+.card-price-span {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.card-tagline {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin: 0 0 15px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-tagline::before {
+  content: '🍴';
+}
+
+.card-desc-p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0 0 24px 0;
+}
+
+.card-body .btn {
+  margin-top: auto;
+  width: 100%;
+}
+
+/* 🎛️ Elegant Glassmorphic Tables (for Admin catalogs) */
+.table-container {
+  overflow-x: auto;
+  padding: 30px;
+  margin-bottom: 40px;
+}
+
+.modern-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.modern-table th {
+  padding: 16px 20px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--dark-color);
+  border-bottom: 2px solid var(--border-color);
+}
+
+.modern-table td {
+  padding: 16px 20px;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: middle;
+}
+
+.modern-table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.modern-table img {
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  width: 80px;
+  height: 55px;
+  box-shadow: var(--shadow-sm);
+}
+
+.table-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.table-actions .btn {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  border-radius: var(--radius-sm);
+}
+
+/* 👥 Dual Layout Grid (Table + Form Side-by-side) */
+.dual-layout {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 30px;
+  align-items: start;
+}
+
+@media (max-width: 992px) {
+  .dual-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 🏨 Restaurant Banner */
+.restaurant-banner {
+  margin-bottom: 40px;
+  padding: 40px;
+  background: var(--card-bg);
+}
+
+.restaurant-banner h1 {
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: var(--dark-color);
+  margin: 0 0 12px 0;
+}
+
+.restaurant-banner-pills {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.banner-pill {
+  background: rgba(0, 0, 0, 0.05);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.banner-pill.rating {
+  color: #ffb300;
+}
+
+/* 🔍 Cuisine & Rating Filter Pills */
+.filter-pill {
+  display: inline-block;
+  text-decoration: none;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  background: rgba(0, 0, 0, 0.05);
+  border: 1.5px solid transparent;
+  transition: var(--transition);
+  cursor: pointer;
+  user-select: none;
+}
+
+.filter-pill:hover {
+  background: rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.filter-pill.active {
+  background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: var(--shadow-sm);
+}
+
+.clear-filters-link {
+  transition: var(--transition);
+}
+
+.clear-filters-link:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+

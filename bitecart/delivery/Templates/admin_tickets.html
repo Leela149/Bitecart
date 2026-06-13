@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiteCart Admin - Support Tickets</title>
+    {% load static %}
+    <link href="{% static 'css/global.css' %}" rel="stylesheet">
+    <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+</head>
+<body>
+
+    <!-- 🧭 Navigation Bar -->
+    <header class="navbar">
+        <a href="/" class="brand">
+            <span>🍕</span> BiteCart Admin
+        </a>
+        <a href="javascript:history.back()" class="back-link" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">
+            ← Back to Dashboard
+        </a>
+    </header>
+
+    <main class="dashboard-container">
+        <div class="dashboard-title-row">
+            <h1>Customer Support Tickets</h1>
+        </div>
+        <p class="section-subtitle">Manage customer queries, mark solved tickets as resolved, or delete obsolete logs.</p>
+
+        <div class="table-container glass-card">
+            <table class="modern-table">
+                <thead>
+                    <tr>
+                        <th style="width: 80px;">Ticket ID</th>
+                        <th style="width: 140px;">Date Submitted</th>
+                        <th style="width: 200px;">Customer Contact</th>
+                        <th>Subject & Message</th>
+                        <th style="width: 120px;">Status</th>
+                        <th style="width: 180px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in tickets %}
+                    <tr>
+                        <td style="font-weight: 600;">#{{ ticket.id }}</td>
+                        <td style="font-size: 0.85rem; color: var(--text-muted);">{{ ticket.created_at|date:"M d, Y H:i" }}</td>
+                        <td>
+                            <div style="font-weight: 600; color: var(--dark-color);">{{ ticket.name }}</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">{{ ticket.email }}</div>
+                        </td>
+                        <td>
+                            <div style="font-weight: 600; color: var(--dark-color); margin-bottom: 5px;">{{ ticket.subject }}</div>
+                            <div style="font-size: 0.9rem; line-height: 1.4; color: var(--text-muted); max-height: 80px; overflow-y: auto;">
+                                {{ ticket.message }}
+                            </div>
+                        </td>
+                        <td>
+                            {% if ticket.is_resolved %}
+                            <span style="background: rgba(76, 175, 80, 0.15); color: var(--success-color); padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: 600;">
+                                Resolved
+                            </span>
+                            {% else %}
+                            <span style="background: rgba(255, 152, 0, 0.15); color: #ff9800; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: 600;">
+                                Pending
+                            </span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="table-actions">
+                                {% if not ticket.is_resolved %}
+                                <a href="{% url 'resolve_ticket' ticket.id %}" class="btn btn-primary">
+                                    Resolve
+                                </a>
+                                {% endif %}
+                                <a href="{% url 'delete_ticket' ticket.id %}" class="btn btn-danger" onclick="return confirm('Permanently delete this support ticket?');">
+                                    Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 50px; color: var(--text-muted);">
+                            <h3>No support tickets found in the system.</h3>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiteCart - Secure Checkout</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    {% load static %}
+    <link href="{% static 'css/global.css' %}" rel="stylesheet">
+    <link href="{% static 'css/checkout.css' %}" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- 🧭 Navigation Bar -->
+    <header class="navbar">
+        <a href="/" class="brand">
+            <span>🍕</span> BiteCart
+        </a>
+        <a href="javascript:history.back()" class="back-link"
+            style="text-decoration: none; color: var(--text-muted); font-weight: 500;">
+            ← Back to Cart
+        </a>
+    </header>
+
+    <!-- 💳 Checkout Card Wrapper -->
+    <main class="checkout-wrapper">
+        <div class="checkout-main-card glass-card">
+
+            <div class="checkout-header" style="margin-bottom: 25px;">
+                <h1 style="margin: 0 0 10px 0; font-size: 1.8rem; font-weight: 700; color: var(--dark-color);">Complete
+                    Your Order</h1>
+                <p style="color: var(--text-muted); margin: 0; font-size: 0.95rem;">Hello {{ username }}, please review
+                    your order and complete the payment.</p>
+            </div>
+
+            {% if error %}
+            <div class="alert-box alert-error">
+                ⚠️ {{ error }}
+            </div>
+            {% else %}
+
+            <h2 class="order-summary-title">Order Details</h2>
+            <div class="checkout-list">
+                {% for cart_item in cart_items %}
+                <div class="checkout-row">
+                    <span class="item-name">{{ cart_item.item.name }} <strong style="color: var(--text-muted); font-size: 0.9rem; margin-left: 8px;">x{{ cart_item.quantity }}</strong></span>
+                    <span class="item-price">₹{{ cart_item.item.price }}</span>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="checkout-total-row">
+                <span>Total to Pay:</span>
+                <span>₹{{ total_price }}</span>
+            </div>
+
+            <div class="security-badge">
+                🔒 Secure 256-bit SSL encrypted transaction
+            </div>
+
+            <button id="rzp-button" class="btn pay-btn">
+                💳 Pay with Razorpay
+            </button>
+            {% endif %}
+
+        </div>
+    </main>
+
+    <script>
+        var options = {
+            "key": "{{ razorpay_key_id }}", // Razorpay API key
+            "amount": "{{ amount_paise }}", // Amount in paise
+            "currency": "INR",
+            "name": "BiteCart",
+            "description": "Food Order Payment",
+            "order_id": "{{ order_id }}", // Razorpay order ID
+            "handler": function (response) {
+                alert("Payment Successful!");
+                // Redirect to the orders page to clear the cart and display receipt
+                window.location.href = "{% url 'orders' username %}";
+            },
+            "prefill": {
+                "name": "{{ username }}",
+                "email": "{{ username }}@example.com",
+                "contact": "9999999999"
+            },
+            "theme": {
+                "color": "#528FF0"
+            }
+        };
+        var rzp = new Razorpay(options);
+
+        document.getElementById('rzp-button').onclick = function (e) {
+            rzp.open();
+            e.preventDefault();
+        }
+    </script>
+</body>
+
+</html>

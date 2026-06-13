@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiteCart - Customer Support</title>
+    {% load static %}
+    <link href="{% static 'css/global.css' %}" rel="stylesheet">
+    <link href="{% static 'css/landing.css' %}" rel="stylesheet">
+</head>
+<body>
+
+    <!-- 🧭 Navigation Bar -->
+    <header class="navbar">
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <a href="/" class="brand">
+                <span>🍕</span> BiteCart Support
+            </a>
+            <a href="javascript:history.back()" class="back-link" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">
+                ← Back
+            </a>
+        </div>
+        <div class="welcome-msg">
+            Welcome, <span>{{ username }}</span>!
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+        
+        <div class="dashboard-title-row">
+            <h1>Customer Support Portal</h1>
+        </div>
+        <p class="section-subtitle">Need help with your order? Check our FAQs or submit a support ticket below.</p>
+
+        <!-- 👥 Dual Layout Grid -->
+        <div class="dual-layout">
+            
+            <!-- Left Side: Contacts & FAQs Accordion -->
+            <section style="display: flex; flex-direction: column; gap: 30px;">
+                
+                <!-- Contact Channels Grid -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 15px;">
+                    <div class="glass-card" style="padding: 20px; text-align: center;">
+                        <span style="font-size: 1.8rem;">📞</span>
+                        <h4 style="margin: 10px 0 5px 0; font-size: 1rem;">Phone Support</h4>
+                        <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">+1 (800) 555-FOOD</p>
+                    </div>
+                    
+                    <div class="glass-card" style="padding: 20px; text-align: center;">
+                        <span style="font-size: 1.8rem;">✉️</span>
+                        <h4 style="margin: 10px 0 5px 0; font-size: 1rem;">Email Us</h4>
+                        <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">support@bitecart.com</p>
+                    </div>
+
+                    <div class="glass-card" style="padding: 20px; text-align: center;">
+                        <span style="font-size: 1.8rem;">🕒</span>
+                        <h4 style="margin: 10px 0 5px 0; font-size: 1rem;">Working Hours</h4>
+                        <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">24/7 (Everyday)</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Accordion Accordion -->
+                <div class="glass-card" style="padding: 30px;">
+                    <h3 style="margin-top: 0; margin-bottom: 20px; font-weight: 600; color: var(--dark-color);">💡 Frequently Asked Questions</h3>
+                    
+                    <div class="faq-accordion-list">
+                        <details class="faq-accordion-item">
+                            <summary class="faq-summary">How do I cancel my order?</summary>
+                            <p class="faq-content">Orders can be cancelled within 5 minutes of placing them. Go to your active cart or contact support directly for immediate cancellation assistance.</p>
+                        </details>
+
+                        <details class="faq-accordion-item">
+                            <summary class="faq-summary">How long does delivery take?</summary>
+                            <p class="faq-content">Delivery usually takes between 30 to 45 minutes, depending on the preparation time of the restaurant and your distance from the venue.</p>
+                        </details>
+
+                        <details class="faq-accordion-item">
+                            <summary class="faq-summary">Can I change my delivery address after ordering?</summary>
+                            <p class="faq-content">Address changes are supported before food preparation starts. Please contact support immediately with your new details to adjust the routing.</p>
+                        </details>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Side: Submit Ticket Form Card -->
+            <section class="auth-card glass-card" style="max-width: 100%; text-align: left; padding: 35px;">
+                <h3 style="margin-top: 0; margin-bottom: 20px; font-weight: 600; color: var(--dark-color);">✉️ Submit a Support Ticket</h3>
+                
+                {% if success %}
+                <div class="alert-box alert-success" style="margin-bottom: 25px;">
+                    ✓ Your query has been submitted successfully! One of our agents will reach out to you shortly.
+                </div>
+                {% endif %}
+
+                <form action="{% url 'submit_ticket' username %}" method="POST">
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="name">Your Name</label>
+                        <input type="text" id="name" name="name" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email Address</label>
+                        <input type="email" id="email" name="email" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" class="form-input" placeholder="Order cancellation, payment issue, etc." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="message">Message / Details</label>
+                        <textarea id="message" name="message" class="form-input" placeholder="Provide as much detail as possible..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Send Ticket</button>
+                </form>
+            </section>
+
+        </div>
+    </main>
+
+</body>
+</html>

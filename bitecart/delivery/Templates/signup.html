@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiteCart - Sign Up</title>
+     {% load static %}
+    <link href="{% static 'css/global.css' %}" rel="stylesheet">
+    <link href="{% static 'css/landing.css' %}" rel="stylesheet">
+</head>
+<body>
+
+    <main class="auth-container">
+        <div class="auth-card glass-card">
+            <h2>🍛 Join BiteCart</h2>
+            <form action="{% url 'signup' %}" method="POST">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <input type="text" id="username" name="username" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input type="email" id="email" name="email" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="mobile">Mobile Number</label>
+                    <input type="text" id="mobile" name="mobile" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="address">Delivery Address</label>
+                    <textarea id="address" name="address" class="form-input" required></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+            </form>
+            <div class="auth-footer">
+                Already have an account? <a href="{% url 'open_signin' %}">Sign In</a>
+            </div>
+        </div>
+    </main>
+    
+</body>
+</html>

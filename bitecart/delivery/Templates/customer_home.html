@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiteCart - Discover Restaurants</title>
+    {% load static %}
+    <link href="{% static 'css/global.css' %}" rel="stylesheet">
+    <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+</head>
+<body>
+
+    <!-- 🧭 Navigation Bar -->
+    <header class="navbar">
+        <a href="{% url 'customer_home' username %}" class="brand">
+            <span>🍕</span> BiteCart
+        </a>
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <div class="welcome-msg">
+                Welcome, <span>{{ username }}</span>!
+            </div>
+            <a href="{% url 'order_history' username %}" class="btn btn-secondary" style="padding: 10px 20px; border-radius: 30px;">
+                📜 Orders
+            </a>
+            <a href="{% url 'open_support' username %}" class="btn btn-secondary" style="padding: 10px 20px; border-radius: 30px;">
+                💬 Support
+            </a>
+        </div>
+    </header>
+
+    <!-- 🍽️ Main Restaurant Listing -->
+    <main class="dashboard-container">
+        
+        <div class="dashboard-title-row">
+            <h1>Popular Restaurants</h1>
+        </div>
+        <p class="section-subtitle">Deliciousness delivered to your door. Browse your favorite restaurants and cuisines.</p>
+
+
+
+        <div class="grid-layout">
+            {% for r in restaurantList %}
+            <article class="catalog-card glass-card">
+                <div class="card-img-wrapper">
+                    {% if r.picture %}
+                    <img src="{{ r.picture }}" alt="{{ r.name }}" class="card-img">
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=600" alt="{{ r.name }}" class="card-img">
+                    {% endif %}
+                    <div class="card-badge-right">
+                        ⭐ <span>{{ r.rating }}</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-header-row">
+                        <h3 class="card-title-h3">{{ r.name }}</h3>
+                    </div>
+                    <div class="card-tagline">{{ r.cuisine }}</div>
+                    <a href="{% url 'view_menu' r.id username %}" class="btn btn-primary">View Menu</a>
+                </div>
+            </article>
+            {% empty %}
+            <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #fff; text-shadow: 1px 1px 4px #000;">
+                <h3>No restaurants found. Please contact the administrator.</h3>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+</body>
+</html>

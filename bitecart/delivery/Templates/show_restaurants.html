@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiteCart Admin - Restaurant Catalog</title>
+    {% load static %}
+    <link href="{% static 'css/global.css' %}" rel="stylesheet">
+    <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+</head>
+<body>
+
+    <!-- 🧭 Navigation Bar -->
+    <header class="navbar">
+        <a href="/" class="brand">
+            <span>🍕</span> BiteCart Admin
+        </a>
+        <a href="javascript:history.back()" class="back-link" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">
+            ← Back to Dashboard
+        </a>
+    </header>
+
+    <main class="dashboard-container">
+        <div class="dashboard-title-row">
+            <h1>Restaurant Catalog</h1>
+        </div>
+        <p class="section-subtitle">View, edit info, delete, or manage menus for all registered restaurants.</p>
+
+        <div class="table-container glass-card">
+            <table class="modern-table">
+                <thead>
+                    <tr>
+                        <th>Restaurant Name</th>
+                        <th>Preview</th>
+                        <th>Cuisine</th>
+                        <th>Rating</th>
+                        <th>Operations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in restaurantList %}
+                    <tr>
+                        <td style="font-weight: 600; color: var(--dark-color);">{{ r.name }}</td>
+                        <td>
+                            {% if r.picture %}
+                            <img src="{{ r.picture }}" alt="{{ r.name }}">
+                            {% else %}
+                            <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=300" alt="{{ r.name }}">
+                            {% endif %}
+                        </td>
+                        <td>{{ r.cuisine }}</td>
+                        <td style="font-weight: 600; color: #ffb300;">⭐ {{ r.rating }}</td>
+                        <td>
+                            <div class="table-actions">
+                                <a href="{% url 'open_update_menu' r.id %}" class="btn btn-primary">
+                                    Menu
+                                </a>
+                                <a href="{% url 'open_update_restaurant' r.id %}" class="btn btn-secondary">
+                                    Edit
+                                </a>
+                                <a href="{% url 'delete_restaurant' r.id %}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this restaurant?');">
+                                    Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                            <h3>No restaurants registered yet.</h3>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+</body>
+</html>

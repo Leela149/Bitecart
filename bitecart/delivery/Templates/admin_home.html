@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiteCart - Admin Panel</title>
+    {% load static %}
+    <link href="{% static 'css/global.css' %}" rel="stylesheet">
+    <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+</head>
+<body>
+
+    <!-- 🧭 Navigation Bar -->
+    <header class="navbar">
+        <a href="/" class="brand">
+            <span>🍕</span> BiteCart Admin
+        </a>
+    </header>
+
+    <main class="dashboard-container">
+        <div class="dashboard-title-row">
+            <h1>Welcome to Admin Panel</h1>
+        </div>
+        <p class="section-subtitle">Manage and optimize BiteCart's delicious listings and menus.</p>
+
+        <div class="admin-grid">
+            <section class="admin-card glass-card">
+                <h3>🍜 Add New Restaurant</h3>
+                <p style="color: var(--text-muted); margin-bottom: 25px;">Register a new culinary spot to start listing their menu.</p>
+                <a href="open_add_restaurant" class="btn btn-primary">Add Restaurant</a>
+            </section>
+
+            <section class="admin-card glass-card">
+                <h3>📋 Show Restaurants</h3>
+                <p style="color: var(--text-muted); margin-bottom: 25px;">Edit catalogs, update existing ratings, or manage menu lists.</p>
+                <a href="open_show_restaurant" class="btn btn-secondary">Show List</a>
+            </section>
+
+            <section class="admin-card glass-card">
+                <h3>✉️ Support Tickets</h3>
+                <p style="color: var(--text-muted); margin-bottom: 25px;">Read customer support queries and mark resolved issues.</p>
+                <a href="{% url 'admin_tickets' %}" class="btn btn-primary">Manage Tickets</a>
+            </section>
+        </div>
+    </main>
+
+</body>
+</html>

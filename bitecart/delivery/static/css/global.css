@@ -1,0 +1,213 @@
+/* ==========================================================================
+   BiteCart Design System - Global Stylesheet
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary-color: #ff5e62;
+  --secondary-color: #ff7e5f;
+  --accent-color: #e64a19;
+  --dark-color: #1e1e1e;
+  --light-bg: #fcfaf9;
+  --card-bg: rgba(255, 255, 255, 0.94);
+  --text-dark: #2d2d2d;
+  --text-muted: #666666;
+  --success-color: #4caf50;
+  --danger-color: #f44336;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 10px 20px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.2);
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  /* Premium food flatlay backdrop with high-contrast darkening filter */
+  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), 
+              url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1600&auto=format&fit=crop') no-repeat center center fixed;
+  background-size: cover;
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+/* 🧭 Glassmorphic Navigation Bar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 8%;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.brand {
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.welcome-msg {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+.welcome-msg span {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* 📦 Common Glassmorphic Card Container */
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: var(--shadow-lg);
+  transition: var(--transition);
+}
+
+/* 🔘 Styled Action Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
+  outline: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(255, 94, 98, 0.25);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(255, 94, 98, 0.45);
+  filter: brightness(1.05);
+}
+
+.btn-secondary {
+  background-color: var(--dark-color);
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  background-color: #2b2b2b;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+}
+
+.btn-danger {
+  background-color: var(--danger-color);
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(244, 67, 54, 0.2);
+}
+
+.btn-danger:hover {
+  transform: translateY(-2px);
+  background-color: #d32f2f;
+  box-shadow: 0 6px 15px rgba(244, 67, 54, 0.35);
+}
+
+/* ✏️ Premium Form Elements */
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-dark);
+  text-transform: capitalize;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: var(--transition);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.form-input:focus {
+  border-color: var(--primary-color);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(255, 94, 98, 0.15);
+}
+
+textarea.form-input {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* ❌ Alert / Error Info Alert Boxes */
+.alert-box {
+  padding: 15px;
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.alert-error {
+  background-color: rgba(244, 67, 54, 0.1);
+  color: var(--danger-color);
+  border-left: 4px solid var(--danger-color);
+}
+
+.alert-success {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: var(--success-color);
+  border-left: 4px solid var(--success-color);
+}
+
+/* Responsive adjustment */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 12px 5%;
+    flex-direction: column;
+    gap: 12px;
+  }
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiteCart - Menu</title>
+    {% load static %}
+    <link href="{% static 'css/global.css' %}" rel="stylesheet">
+    <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+</head>
+<body>
+
+    <!-- 🧭 Navigation Bar -->
+    <header class="navbar">
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <a href="/" class="brand">
+                <span>🍕</span> BiteCart
+            </a>
+            <a href="javascript:history.back()" class="back-link" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">
+                ← Back to Restaurants
+            </a>
+        </div>
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <div class="welcome-msg">
+                Welcome, <span>{{ username }}</span>!
+            </div>
+            <a href="{% url 'order_history' username %}" class="btn btn-secondary" style="padding: 10px 20px; border-radius: 30px;">
+                📜 Orders
+            </a>
+            <a href="{% url 'open_support' username %}" class="btn btn-secondary" style="padding: 10px 20px; border-radius: 30px;">
+                💬 Support
+            </a>
+            <a href="{% url 'show_cart' username %}" class="btn btn-secondary" style="padding: 10px 20px; border-radius: 30px;">
+                🛒 View Cart
+            </a>
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+        <!-- 🏨 Restaurant Banner Card -->
+        <section class="restaurant-banner glass-card">
+            <h1>{{ restaurant.name }}</h1>
+            <div class="restaurant-banner-pills">
+                <span class="banner-pill">🍴 {{ restaurant.cuisine }}</span>
+                <span class="banner-pill rating">⭐ {{ restaurant.rating }}</span>
+            </div>
+        </section>
+
+        <!-- 🍔 Menu Listing -->
+        <h2 style="font-size: 1.8rem; font-weight: 600; color: #fff; margin-bottom: 30px; text-shadow: 1px 1px 8px rgba(0,0,0,0.6);">Our Menu</h2>
+        <div class="grid-layout">
+            {% for item in itemList %}
+            <article class="catalog-card glass-card">
+                <div class="card-img-wrapper">
+                    {% if item.picture %}
+                    <img src="{{ item.picture }}" alt="{{ item.name }}" class="card-img">
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=600" class="card-img" alt="{{ item.name }}">
+                    {% endif %}
+                    
+                    {% if item.vegeterian %}
+                    <div class="card-badge-left veg">
+                        <span class="dot"></span> Veg
+                    </div>
+                    {% else %}
+                    <div class="card-badge-left nonveg">
+                        <span class="dot"></span> Non-Veg
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <div class="card-header-row">
+                        <h3 class="card-title-h3">{{ item.name }}</h3>
+                        <span class="card-price-span">₹{{ item.price }}</span>
+                    </div>
+                    <p class="card-desc-p">{{ item.description }}</p>
+                    <a href="{% url 'add_to_cart' item.id username %}" class="btn btn-primary">
+                        Add to Cart
+                    </a>
+                </div>
+            </article>
+            {% empty %}
+            <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #fff; text-shadow: 1px 1px 4px #000;">
+                <h3>No items available in this menu yet.</h3>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+</body>
+</html>
