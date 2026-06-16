@@ -158,6 +158,9 @@ DATABASES = {
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
-ALLOWED_HOSTS = ['leela123.pythonanywhere.com', 'www.leela123.pythonanywhere.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['leela123.pythonanywhere.com', 
+                 'www.leela123.pythonanywhere.com', 
+                 '127.0.0.1', 
+                 'localhost']
 
 
