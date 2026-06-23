@@ -78,12 +78,7 @@ WSGI_APPLICATION = 'bitecart.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+
 
 database_url = os.environ.get('DATABASE_URL')
 if database_url:
@@ -149,7 +144,7 @@ import dj_database_url
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': r'C:\Users\kalal\OneDrive\Desktop\djangopro\bitecart\db.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -162,4 +157,6 @@ ALLOWED_HOSTS = ['leela123.pythonanywhere.com',
                  '127.0.0.1', 
                  'localhost']
 
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
