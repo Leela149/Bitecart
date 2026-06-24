@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from django.core.mail import send_mail
 from .models import Customer, Restaurant, Item, Cart, CartItem, SupportTicket, Order, OrderItem
 
 import razorpay
@@ -163,7 +164,7 @@ def add_to_cart(request, item_id, username):
         cart_item.quantity += 1
         cart_item.save()
 
-    return HttpResponse('added to cart')
+    return JsonResponse({'status': 'success', 'message': 'Item added to cart successfully!'})
 
 def show_cart(request, username):
     customer = Customer.objects.get(username=username)
@@ -293,12 +294,40 @@ def submit_ticket(request, username):
         subject = request.POST.get('subject')
         message = request.POST.get('message')
 
-        SupportTicket.objects.create(
+        ticket = SupportTicket.objects.create(
             name=name,
             email=email,
             subject=subject,
             message=message
         )
+
+        # Connect ticket to adminleela by sending an email copy
+        try:
+            admin_user = Customer.objects.filter(username='adminleela').first()
+            recipient_email = admin_user.email if (admin_user and admin_user.email) else 'leelapriyakala@gmail.com'
+        except Exception:
+            recipient_email = 'leelapriyakala@gmail.com'
+
+        try:
+            email_subject = f"New Support Ticket #{ticket.id} - {subject}"
+            email_body = (
+                f"A new support ticket has been submitted to adminleela.\n\n"
+                f"Ticket ID: #{ticket.id}\n"
+                f"Sender Name: {name}\n"
+                f"Sender Email: {email}\n"
+                f"Subject: {subject}\n\n"
+                f"Message:\n{message}\n"
+            )
+            send_mail(
+                email_subject,
+                email_body,
+                settings.DEFAULT_FROM_EMAIL,
+                [recipient_email],
+                fail_silently=True,
+            )
+        except Exception:
+            pass
+
         return render(request, 'support.html', {'username': username, 'success': True})
     return render(request, 'support.html', {'username': username})
 

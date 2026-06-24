@@ -160,3 +160,8 @@ ALLOWED_HOSTS = ['leela123.pythonanywhere.com',
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Email backend configuration for local testing and ticket notifications
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'support@bitecart.com'
+
